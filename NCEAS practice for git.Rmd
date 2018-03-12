@@ -1,0 +1,19 @@
+---
+title: "NCEAS practice for git"
+author: "GG"
+date: "March 12, 2018"
+output: html_document
+---
+
+```{r practice for git}
+fake_data <- seq(1,100)
+fake_data_2 <- seq(1,200,2)
+plot(x=fake_data, y=fake_data_2)
+
+```
+
+
+## Git Practice
+
+This is an a practice R Markdown document for use with github.  Plot created represents mean of sequence data 1:100 by 1 and by 5. 
+
