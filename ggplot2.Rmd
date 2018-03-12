@@ -8,5 +8,17 @@ output: html_document
 #Learning ggplot2
 
 ```{r}
-
+library(ggplot2)
+library(tidyverse)
 ```
+```{r}
+head(mpg)
+```
+
+```{r}
+myplot <- ggplot(data=mpg, aes(x=displ, y=hwy)) 
+myplot + geom_point() 
+```
+
+
+
