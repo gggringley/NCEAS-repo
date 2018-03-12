@@ -10,6 +10,7 @@ output: html_document
 ```{r}
 library(ggplot2)
 library(tidyverse)
+library(ggthemes)
 ```
 ```{r}
 head(mpg)
@@ -28,6 +29,60 @@ ggplot(mpg, aes(x=displ, y=hwy, color=class)) + geom_point()
 ggplot(mpg, aes(x=hwy, y=cty, size=class, color=fl)) + geom_point()
 ```
 ```{r}
-ggplot(mpg, aes(x=hwy, y=cty, color=class)) + geom_point(alpha=0.4)
+ggplot(mpg, aes(x=hwy, y=cty, color=class)) + geom_point(alpha=0.4) + facet_wrap( ~ manufacturer) +
+  theme_bw()
 ```
 
+```{r}
+my_plot2 <- ggplot(mpg, aes(x=class, y=cty, color=class)) + geom_boxplot(alpha=0.4) 
+
+ggsave("example_boxplot.png", plot=myplot, width = 15, height = 15, units = "cm")
+```
+
+```{r}
+ggplot(mpg, aes(x=log(hwy), y=cty, color=class)) + geom_point(alpha=0.4) + facet_wrap( ~ manufacturer, ncol = 5) + theme_bw()
+```
+
+```{r}
+ggplot(mpg, aes(x=drv, y=hwy, color = drv)) + 
+  geom_boxplot() + geom_jitter(alpha=0.4)
+```
+
+```{r}
+ggplot(mpg, aes(x=drv, y=hwy, color = drv)) + 
+  geom_violin() + geom_jitter(alpha=0.4)
+```
+
+```{r}
+ggplot(mpg, aes(x=displ, y=hwy)) + 
+  geom_smooth(method = lm) 
+```
+
+
+```{r}
+ggplot(mpg, aes(x=displ, y=hwy)) + 
+  geom_smooth(method = lm) + geom_point()
+```
+
+```{r}
+ggplot(mpg, aes(x=displ, y=hwy)) + geom_point() + 
+  geom_smooth(method = lm) + labs(title = "Relationship between engine size and highway mileage (mpg)", x = "Engine Size (liters displaced)", y = "Highway Mileage (miles per gallon)")
+```
+
+```{r}
+ggplot(mpg, aes(x=fl, fill=class)) + geom_bar(position = "fill", color="black")
+```
+
+```{r}
+ggplot(mpg, aes(x=fl, fill=class)) + geom_bar(position = "dodge", color="black") + theme_bw()
+```
+
+```{r}
+ggplot(mpg, aes(x=fl, fill=class)) + geom_bar(color="black")
+```
+
+```{r}
+myplot <- ggplot(mpg, aes(x=fl, fill=class)) + geom_bar(position = "dodge", color="black")
+
+ggsave("example_plot.png", plot=myplot, width = 15, height = 15, units = "cm")
+```
