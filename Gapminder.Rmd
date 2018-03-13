@@ -61,6 +61,8 @@ skim(gapminder)
 filter(gapminder, country == "Switzerland")
 ```
 
+##Dplyer
+*filter and select*
 ```{r}
 filter(gapminder, lifeExp < 30)
 ```
@@ -96,11 +98,96 @@ select(gapminder, -continent) %>% filter(year == 2007)
 gapminder %>% mutate(gdp = gdpPercap * pop) %>% arrange(desc(gdp))
 ```
 
+##Group by
+
+*Allows you to use a subset of the dataframe*
+
+```{r}
+gapminder %>% group_by(country) %>% mutate(gdp = gdpPercap * pop, max_gdp = max(gdp)) %>% ungroup()
+```
+
+##Combining Group_By and Summarize
+
+```{r}
+gapminder %>% group_by(country) %>% mutate(gdp = gdpPercap * pop) %>%
+  summarize(max_gdp = max(gdp)) %>% ungroup()
+```
+
+##Joining Datasets in Tidyr
+*using left and right_join or full_join to combine tables. Order of datasets in the code assigns position, i.e. left or right. Use similar to merge in baser*
+
+```{r}
+co2 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv")
+rm(Co2)
+head(co2)
+summary(co2)
+
+```
+
+*combine co2 dataset with gapminder*
+```{r}
+gap_2007 <- gapminder %>% filter(year == 2007) 
+length(unique(gapminder$country))
+left_join(gap_2007, co2, by = "country")
+
+```
+
+```{r}
+right_join(gap_2007, co2, by = "country")
+```
+
+*can use set_diff() to see where the datasets don't match*
+
+##Tidyr
+*using Airpassengers dataset loaded with Tidyr*
+
+```{r}
+AirPassengers
+```
+
+*gather - will gather data from rows and combine into columns*
+*spread - does the opposite - takes columns and spreads them into rows*
+*separate - separates one column into several*
+*unite - combines several columns into one*
+
+```{r}
+?gather
+AirPassengers <- data.frame(AirPassengers)
+gather(AirPassengers, month, passengers)
+```
 
 
+```{r}
+gap_wide <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder_wide.csv")
+```
+
+*Let's try gather again*
+
+```{r}
+gap_wide %>% gather(observation, observ_value)
+```
+
+*too much collapse. Let's try again*
+
+```{r}
+gap_wide %>% gather(observation, observ_value, -continent, -country)
+```
+
+*Still better*
+```{r}
+gap_better <- gap_wide %>% gather(observation, observ_value, -continent, -country) %>% 
+  separate(observation, into = c("obs_type", "year"), sep = "_", convert = TRUE)
+
+unique(gap_better$obs_type)
 
 
+```
 
+*Even better*
+```{r}
+gap_best <- gap_better %>% spread(obs_type, observ_value)
+gap_best
+```
 
 
 
