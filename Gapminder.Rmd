@@ -44,6 +44,68 @@ unique(gapminder[, "continent"])
 ggplot(data=gapminder, aes(x=year, y=pop, color=continent)) + geom_point() 
 ```
 
+```{r}
+summary(gapminder)
+```
+
+```{r}
+# install.packages("skimr")
+library("skimr")
+```
+
+```{r}
+skim(gapminder)
+```
+
+```{r}
+filter(gapminder, country == "Switzerland")
+```
+
+```{r}
+filter(gapminder, lifeExp < 30)
+```
+
+```{r}
+filter(gapminder, country == "Rwanda", year == max(year))
+```
+
+```{r}
+dplyr::select(gapminder, country, year, pop)
+```
+
+```{r}
+dplyr::select(gapminder, -continent)
+```
+
+```{r}
+gapminder_no_cont <- dplyr::select(gapminder, -continent)
+filter(gapminder_no_cont, year == 2007)
+```
+
+##Easier way using pipe
+*This notation signifies to use the result of the first statement in the second command.* 
+
+```{r}
+select(gapminder, -continent) %>% filter(year == 2007)
+```
+
+##Mutate
+*A way to do an operation on an existing column and create a new version as a separate column*
+
+```{r}
+gapminder %>% mutate(gdp = gdpPercap * pop) %>% arrange(desc(gdp))
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
