@@ -1,0 +1,49 @@
+---
+title: "GapMinder"
+author: "GG"
+date: "3/13/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+gapminder <- read_csv("https://raw.githubusercontent.com/jules32/2017-11-30-MBARI/gh-pages/data/gapminder.csv")
+```
+
+```{r}
+head(gapminder)
+tail(gapminder,2)
+```
+
+
+```{r}
+str(gapminder)
+```
+
+```{r}
+dim(gapminder)
+ncol(gapminder)
+nrow(gapminder)
+```
+
+```{r}
+unique(gapminder$country)
+unique(gapminder[, "continent"])
+```
+
+
+```{r}
+ggplot(data=gapminder, aes(x=year, y=pop, color=continent)) + geom_point() 
+```
+
+
+
+
